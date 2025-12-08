@@ -46,3 +46,15 @@ High-energy-density cells that power the entire system.
 
 ### Battery Holder
 Holds and connects the 18650 batteries in series to provide the required voltage.
+
+---
+
+## Images
+
+<div style="display: flex; gap: 10px;">
+
+  <img src="Images/image1.png" alt="Robot Chassis" width="200" />
+  <img src="Images/image2.png" alt="Wiring Setup" width="200" />
+
+</div>
+
