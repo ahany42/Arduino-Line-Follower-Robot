@@ -46,3 +46,5 @@ High-energy-density cells that power the entire system.
 
 ### Battery Holder
 Holds and connects the 18650 batteries in series to provide the required voltage.
+
+
