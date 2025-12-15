@@ -1,50 +1,117 @@
-# Line Follower & Obstacle Avoidance Robot
+# 🚗 Line Follower & Obstacle Avoidance Robot
 
-Arduino-based car using Infrared sensors for line detection and an Ultrasonic sensor for obstacle avoidance.
-
-This project implements an autonomous robotic car capable of following a track line and avoiding obstacles in its path. Using IR sensors for line detection and an ultrasonic sensor for distance measurement, the robot makes real-time decisions to navigate safely and smoothly.
-
----
-
-## Features
-
-### Line Following
-- IR sensors detect black/white contrast.
-- The robot adjusts motor movement to stay aligned with the track.
-
-### Obstacle Avoidance
-- The ultrasonic sensor measures distance ahead.
-- The robot stops and reacts when an object is detected.
+An **Arduino-based autonomous robotic car** that follows a line using **infrared sensors** and avoids obstacles using an **ultrasonic sensor**.  
+The robot processes sensor data in real time to make movement decisions such as moving forward, turning left/right, or stopping.
 
 ---
 
-## Hardware Used
+## 📌 Project Overview
 
-### Uno R3 (Microcontroller)
-Executes the control algorithms and processes sensor inputs/outputs.
+This project implements a smart robotic car capable of:
 
-### L298 Dual H-Bridge Motor Driver
-Amplifies Arduino logic signals to supply the higher current required to drive DC motors.
+- Following a black line on a contrasting surface
+- Detecting obstacles ahead
+- Stopping safely when an object is too close
+- Making smooth directional corrections using differential motor control
 
-### Ultrasonic Sensor Module
-Calculates distance using time-of-flight of ultrasonic waves for obstacle detection.
+The system combines **IR line detection** with **distance averaging** from an ultrasonic sensor to reduce noise and improve stability.
 
-### Infrared Line/Obstacle Sensors
-Detect black track lines and nearby objects using infrared reflection.
+---
 
-### Breadboard
-A solderless prototyping board for connecting circuits.
+## ✨ Features
 
-### Jumper Wires
-Used to connect sensors, modules, and the motor driver to the Arduino.
+### 🔹 Line Following
+- Uses **two IR sensors** (left & right)
+- Detects black/white contrast using a configurable threshold
+- Adjusts motor movement to stay aligned with the track
 
-### Robot Chassis with DC Gear Motors
-Provides movement and differential steering capability.
+### 🔹 Obstacle Avoidance
+- Uses an **ultrasonic sensor** to measure distance
+- Applies a moving average filter to ultrasonic readings
+- Stops the robot when an obstacle is detected within a safe range
 
-### 18650 Li-Ion Batteries
-High-energy-density cells that power the entire system.
+### 🔹 Motor Control
+- Controlled via an **L298 Dual H-Bridge** motor driver
+- Independent control of left and right motors
+- PWM speed control using Arduino pins
 
-### Battery Holder
-Holds and connects the 18650 batteries in series to provide the required voltage.
+---
+
+## 🧠 Control Logic
+
+| Left IR | Right IR | UV (Ultrasonic) | Action |
+|--------|----------|------------------|--------|
+| Black  | Black    | Safe (> 50 cm)   | Move Forward |
+| Black  | White    | Safe (> 50 cm)   | Turn Left |
+| White  | Black    | Safe (> 50 cm)   | Turn Right |
+| White  | White    | Safe (> 50 cm)   | Stop |
+| —      | —        | Obstacle < 50 cm | Stop |
 
 
+---
+
+## 🔌 Pin Configuration
+
+### 🛞 Motor Driver (L298)
+
+| Function | Arduino Pin |
+|--------|-------------|
+| IN1 | 7 |
+| IN2 | 4 |
+| IN3 | 5 |
+| IN4 | 6 |
+| ENA | 9 |
+| ENB | 8 |
+
+### 📡 Ultrasonic Sensor
+
+| Function | Arduino Pin |
+|--------|-------------|
+| Trig | 3 |
+| Echo | 2 |
+
+### 👁️ IR Sensors
+
+| Sensor | Arduino Pin |
+|------|-------------|
+| Left IR | A5 |
+| Right IR | A0 |
+
+---
+
+## ⚙️ Constants Used
+
+```cpp
+const int NUM_READINGS      = 5;     // Ultrasonic averaging
+const int MOTOR_SPEED       = 255;   // Max motor speed
+const int IR_THRESHOLD      = 150;   // Black/white threshold
+const int OBSTACLE_DISTANCE = 50;    // Stop distance (cm)
+```
+
+## 🧩 Hardware Components
+
+Arduino Uno R3 – Main microcontroller
+
+L298 Dual H-Bridge Motor Driver – Drives DC motors
+
+Ultrasonic Sensor (HC-SR04) – Obstacle detection
+
+Infrared Line Sensors (2x) – Line tracking
+
+Robot Chassis with DC Gear Motors
+
+Breadboard & Jumper Wires
+
+18650 Li-Ion Batteries + Holder
+
+## 🚀 How It Works
+
+IR sensors continuously read surface color values.
+
+Ultrasonic sensor measures distance ahead.
+
+Distance values are averaged to reduce noise.
+
+If an obstacle is closer than 50 cm, the robot stops.
+
+Otherwise, IR sensor states determine movement direction.
