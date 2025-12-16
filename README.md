@@ -107,6 +107,10 @@ Breadboard & Jumper Wires
 ## 🚀 How It Works
 
 IR sensors continuously read surface color values.
+<p align="center">
+  <img src="/Images/image1.png" alt="Image 1" width="250" style="margin-right:10px;"/>
+  <img src="/Images/image2.png" alt="Image 2" width="240"/>
+</p>
 
 Ultrasonic sensor measures distance ahead.
 
